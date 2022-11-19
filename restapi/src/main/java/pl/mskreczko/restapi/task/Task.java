@@ -8,11 +8,12 @@ import java.time.LocalDate;
 
 @NoArgsConstructor
 @Entity
+@Table(name = "tasks")
 public class Task {
     @Id
     @SequenceGenerator(name = "task_id_seq", sequenceName = "task_id_sequence", allocationSize = 150)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "task_id_seq")
-    @Column(name = "task_id", nullable = false)
+    @Column(name = "id", nullable = false)
     private Integer id;
 
     @Column(name = "title", nullable = false)
@@ -29,6 +30,6 @@ public class Task {
     private Status status;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @Column(name = "fk_user")
+    @JoinColumn(name = "user_id")
     private User user;
 }
