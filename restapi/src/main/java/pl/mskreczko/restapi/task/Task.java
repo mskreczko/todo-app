@@ -1,0 +1,34 @@
+package pl.mskreczko.restapi.task;
+
+import lombok.NoArgsConstructor;
+import pl.mskreczko.restapi.user.User;
+
+import javax.persistence.*;
+import java.time.LocalDate;
+
+@NoArgsConstructor
+@Entity
+public class Task {
+    @Id
+    @SequenceGenerator(name = "task_id_seq", sequenceName = "task_id_sequence", allocationSize = 150)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "task_id_seq")
+    @Column(name = "task_id", nullable = false)
+    private Integer id;
+
+    @Column(name = "title", nullable = false)
+    private String title;
+
+    @Column(name = "description", nullable = false)
+    private String description;
+
+    @Column(name = "creationDate", nullable = false)
+    private LocalDate creationDate;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    private Status status;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @Column(name = "fk_user")
+    private User user;
+}
