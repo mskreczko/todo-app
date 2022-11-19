@@ -25,7 +25,7 @@ public class UserController {
         if (result.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        UserDto user = new UserDto(result.get().getName(), result.get().getEmail(), result.get().getTasks());
+        UserDto user = new UserDto(result.get().getName(), result.get().getEmail());
         return ResponseEntity.ok(user);
     }
 
