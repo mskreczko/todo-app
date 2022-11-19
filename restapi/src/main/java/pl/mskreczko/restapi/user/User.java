@@ -2,11 +2,8 @@ package pl.mskreczko.restapi.user;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import pl.mskreczko.restapi.task.Task;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -27,9 +24,6 @@ public class User {
 
     @Column(name = "password", nullable = false)
     private String password;
-
-    @OneToMany(mappedBy = "user")
-    List<Task> tasks = new ArrayList<>();
 
     public User(String name, String email, String password) {
         this.name = name;

@@ -1,11 +1,13 @@
 package pl.mskreczko.restapi.task;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import pl.mskreczko.restapi.user.User;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
+@Getter
 @NoArgsConstructor
 @Entity
 @Table(name = "tasks")
@@ -32,4 +34,12 @@ public class Task {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    Task(String title, String description, User user) {
+        this.title = title;
+        this.description = description;
+        this.creationDate = LocalDate.now();
+        this.status = Status.ACTIVE;
+        this.user = user;
+    }
 }
