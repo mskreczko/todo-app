@@ -29,11 +29,10 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
-    @PostMapping("/users/")
+    @PostMapping("/users")
     public ResponseEntity<?> createUser(@RequestBody UserCreationDto userCreationDto) {
-        User user = new User(userCreationDto.name(), userCreationDto.email(), userCreationDto.password());
         try {
-            userService.createUser(user);
+            userService.createUser(new User(userCreationDto.name(), userCreationDto.email(), userCreationDto.password()));
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (UserAlreadyExistsException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
