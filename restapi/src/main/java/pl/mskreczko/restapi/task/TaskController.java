@@ -9,6 +9,7 @@ import pl.mskreczko.restapi.user.UserService;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:3000")
 public class TaskController {
     private TaskService taskService;
     private UserService userService;
