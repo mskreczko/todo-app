@@ -1,0 +1,11 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.hero-header {
+    color: #fff;
+    background-color: #0c0b0d;
+    min-height: 50px;
+    padding: 20px;
+}

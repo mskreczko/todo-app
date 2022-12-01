@@ -1,4 +1,5 @@
 import React from 'react';
+import './TasksList.css';
 
 class TasksList extends React.Component {
     constructor(props) {
@@ -6,30 +7,26 @@ class TasksList extends React.Component {
 
         this.state = {
             tasks: [],
-            loaded: false,
         };
     }
 
     componentDidMount() {
         fetch("http://localhost:8080/api/users/1/tasks")
         .then((res) => res.json())
-        .then((tasks) => {this.setState({tasks: tasks, loaded: true})});
+        .then((tasks) => {this.setState({tasks: tasks})});
     }
 
     render() {
-        const { tasks, loaded } = this.state;
+        const tasks = this.state.tasks;
 
         return (
-            <div>
-                <h1>Tasks List</h1>
-
+            <ul className='tasks'>
                 {tasks.map((task, idx) => (
-                    <div key={idx}>
-                        <h2>{task.title}</h2>
-                        <p>{task.status}</p>
-                    </div>
+                    <li className='single-task' key={idx}>
+                        <a className='single-task-btn' href="#"><h2 className={'single-task-title '+ (task.status=="ACTIVE" ? "active" : "done")}>{task.title}</h2></a>
+                    </li>
                 ))}
-            </div>
+            </ul>
         );
     }
 }
