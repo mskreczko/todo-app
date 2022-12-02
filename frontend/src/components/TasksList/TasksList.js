@@ -18,12 +18,13 @@ class TasksList extends React.Component {
 
     render() {
         const tasks = this.state.tasks;
+        const userId = 1;
 
         return (
             <ul className='tasks'>
                 {tasks.map((task, idx) => (
                     <li className='single-task' key={idx}>
-                        <a className='single-task-btn' href="#"><h2 className={'single-task-title '+ (task.status=="ACTIVE" ? "active" : "done")}>{task.title}</h2></a>
+                        <a className='single-task-btn' href={userId + '/tasks/' + task.id}><h2 className={'single-task-title '+ (task.status==="ACTIVE" ? "active" : "done")}>{task.title}</h2></a>
                     </li>
                 ))}
             </ul>

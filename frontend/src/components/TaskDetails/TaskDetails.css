@@ -1,0 +1,9 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.task {
+    color: #fff;
+    flex: 1;
+}
