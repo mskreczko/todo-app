@@ -19,7 +19,7 @@ public class TaskService {
     }
 
     public List<TaskPreviewDto> findAllByUserId(Integer userId) {
-        return taskRepository.findByUserId(userId).stream().map(task -> new TaskPreviewDto(task.getTitle(), task.getStatus())).collect(Collectors.toList());
+        return taskRepository.findByUserId(userId).stream().map(task -> new TaskPreviewDto(task.getId(), task.getTitle(), task.getStatus())).collect(Collectors.toList());
     }
 
     public Optional<TaskContentDto> findOneTaskByUserId(Integer userId, Integer taskId) {
