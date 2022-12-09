@@ -1,5 +1,5 @@
 import { React, useState, setState } from 'react';
-// import './LoginForm.css';
+import './LoginForm.css';
 
 function LoginForm() {
     const [email, setEmail] = useState('');
@@ -26,9 +26,6 @@ function LoginForm() {
         .then((response) => { return response.json() })
         .then((json) => { console.log(json) })
         .catch((error) => { console.log(error)} )
-
-        // props.history.push('/tasks'/); <--- does not work
-        // after successful login redirect to main page with visible tasks
     }
 
     return (

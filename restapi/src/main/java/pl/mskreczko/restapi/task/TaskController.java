@@ -21,25 +21,25 @@ public class TaskController {
 
     @GetMapping("/users/{userId}/tasks")
     public ResponseEntity<?> getTasksByUserId(@PathVariable("userId") Integer userId) {
-        if (userService.getUserById(userId).isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
+        // if (userService.getUserById(userId).isEmpty()) {
+        //     return ResponseEntity.notFound().build();
+        // }
         return ResponseEntity.ok(taskService.findAllByUserId(userId));
     }
 
     @GetMapping("/users/{userId}/tasks/{taskId}")
     public ResponseEntity<?> getOneTaskByUserId(@PathVariable("userId") Integer userId, @PathVariable("taskId") Integer taskId) {
-        if (userService.getUserById(userId).isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
+        // if (userService.getUserById(userId).isEmpty()) {
+        //     return ResponseEntity.notFound().build();
+        // }
         return ResponseEntity.of(taskService.findOneTaskByUserId(userId, taskId));
     }
 
     @PostMapping("/users/{userId}/tasks")
     public ResponseEntity<?> createNewTask(@PathVariable("userId") Integer userId, @RequestBody TaskCreationDto taskCreationDto) {
-        if (userService.getUserById(userId).isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
+        // if (userService.getUserById(userId).isEmpty()) {
+        //     return ResponseEntity.notFound().build();
+        // }
 
         taskService.createNewTask(userService.getUserById(userId).get(), taskCreationDto);
 

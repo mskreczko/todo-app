@@ -1,6 +1,5 @@
 import { React, useState, setState } from 'react';
-
-// import './RegisterForm.css';
+import './RegisterForm.css';
 
 function RegisterForm() {
 
@@ -25,11 +24,7 @@ function RegisterForm() {
             },
             body: JSON.stringify({'email': email, 'password': password}),
         })
-        // .then((response) => response.json())
-        // .then((data) => { console.log(data) })
         .catch((error) => { console.log(error) });
-
-        // props.history.push('/signin'); <--- does not work
     }
 
     return (
