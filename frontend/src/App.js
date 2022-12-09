@@ -3,8 +3,8 @@ import TasksList from './components/TasksList/TasksList';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import TaskDetails from './components/TaskDetails/TaskDetails';
-import LoginForm from './components/Authentication/LoginForm/LoginForm';
 import RegisterForm from './components/Authentication/RegisterForm/RegisterForm';
+import LoginForm from './components/Authentication/LoginForm/LoginForm';
 import { Route, Routes } from 'react-router-dom';
 
 function App() {
@@ -14,8 +14,8 @@ function App() {
       <Routes>
         <Route path="/" element={<TasksList/>}/>
         <Route path="/:userId/tasks/:taskId" element={<TaskDetails/>}/>
-        <Route path="/signin" element={<LoginForm/>}/>
         <Route path="/signup" element={<RegisterForm/>}/>
+        <Route path="/signin" element={<LoginForm/>}/>
       </Routes>
       <Footer/>
     </div>
