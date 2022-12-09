@@ -1,10 +1,12 @@
-import { React, useState, setState } from 'react';
+import { React, useState, useEffect } from 'react';
+import { Navigate, useNavigate } from 'react-router-dom';
 import './RegisterForm.css';
 
 function RegisterForm() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
     const onChange = (e) => {
         if (e.target.name === 'email') {
@@ -25,6 +27,8 @@ function RegisterForm() {
             body: JSON.stringify({'email': email, 'password': password}),
         })
         .catch((error) => { console.log(error) });
+
+        navigate('/signin');
     }
 
     return (
