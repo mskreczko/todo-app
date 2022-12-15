@@ -29,13 +29,14 @@ public class User implements UserDetails {
     @Column(name = "enabled")
     private Integer enabled;
 
-    @Column(name = "token")
-    private String token;
-
     public User(String email, String password) {
         this.email = email;
         this.password = password;
         this.enabled = 1;
+    }
+
+    public Integer getId() {
+        return id;
     }
 
     public String getUsername() {
