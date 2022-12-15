@@ -1,36 +1,28 @@
 package pl.mskreczko.restapi.auth.login;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import pl.mskreczko.restapi.auth.login.dto.UserLoginDto;
 
-import java.util.UUID;
-
+@RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api/v1/auth")
 @CrossOrigin(origins = "http://localhost:3000")
 public class LoginController {
     private final LoginService loginService;
-
-    public LoginController(LoginService loginService) {
-        this.loginService = loginService;
-    }
 
     @PostMapping("/signin")
     public ResponseEntity<?> login(@RequestBody UserLoginDto credentials) {
         try {
             if (!loginService.authenticateUser(credentials.email(), credentials.password())) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+                return new ResponseEntity(HttpStatus.UNAUTHORIZED);
             }
         } catch (UsernameNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return new ResponseEntity(HttpStatus.CONFLICT);
         }
-
-        String token = UUID.randomUUID().toString();
-        loginService.saveToken(credentials.email(), token);
-
-        return ResponseEntity.ok().body("{\"token\":\"" + token + "\"}");
+        return ResponseEntity.ok(loginService.getJWTToken(credentials.email()));
     }
 }
