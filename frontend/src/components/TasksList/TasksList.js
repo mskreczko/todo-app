@@ -1,35 +1,36 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './TasksList.css';
 
-class TasksList extends React.Component {
-    constructor(props) {
-        super(props);
+function TasksList() {
+    const [tasks, setTasks] = useState([]);
 
-        this.state = {
-            tasks: [],
-        };
-    }
+    useEffect(() => {
+        async function getTasks() {
+            await fetch('http://localhost:8080/api/v1/tasks', {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token'),
+                },
+            })
+            .then((response) => response.json())
+            .then((tasks) => { setTasks(tasks) })
+            .catch((error) => {console.log(error) });
 
-    componentDidMount() {
-        fetch("http://localhost:8080/api/users/1/tasks")
-        .then((res) => res.json())
-        .then((tasks) => {this.setState({tasks: tasks})});
-    }
+            console.log(tasks);
+        }
 
-    render() {
-        const tasks = this.state.tasks;
-        const userId = 1;
+        getTasks();
+    }, []);
 
-        return (
-            <ul className='tasks'>
-                {tasks.map((task, idx) => (
-                    <li className='single-task' key={idx}>
-                        <a className='single-task-btn' href={userId + '/tasks/' + task.id}><h2 className={'single-task-title '+ (task.status==="ACTIVE" ? "active" : "done")}>{task.title}</h2></a>
-                    </li>
-                ))}
-            </ul>
-        );
-    }
+    return (
+        <ul className='tasks'>
+            {tasks.map((task, idx) => (
+                <li className='single-task' key={idx}>
+                    <a className='single-task-btn' href={'/tasks/' + task.id}><h2 className={'single-task-title '+ (task.status==="ACTIVE" ? "active" : "done")}>{task.title}</h2></a>
+                </li>
+            ))}
+        </ul>
+    );
 }
 
 export default TasksList;

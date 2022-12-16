@@ -1,9 +1,11 @@
 import { React, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './LoginForm.css';
 
 function LoginForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
     const onChange = e => {
         if (e.target.name === 'email') {
@@ -16,16 +18,18 @@ function LoginForm() {
 
     const onSubmit = e => {
         e.preventDefault();
-        fetch('http://localhost:8080/api/auth/signin', {
+        fetch('http://localhost:8080/api/v1/auth/signin', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({'email': email, 'password': password}),
         })
-        .then((response) => { return response.json() })
-        .then((json) => { console.log(json) })
-        .catch((error) => { console.log(error)} )
+        .then((response) => { 
+            if (response.status === 200)
+                return response.text();
+            }).then((data) => { localStorage.setItem("token", data); navigate('/tasks') })
+            .catch((error) => { console.log(error) });
     }
 
     return (

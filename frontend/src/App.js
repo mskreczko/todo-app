@@ -12,8 +12,7 @@ function App() {
     <div className="App">
       <Header/>
       <Routes>
-        <Route path="/" element={<TasksList/>}/>
-        <Route path="/:userId/tasks/:taskId" element={<TaskDetails/>}/>
+        <Route path="/tasks" element={<TasksList/>}/>
         <Route path="/signup" element={<RegisterForm/>}/>
         <Route path="/signin" element={<LoginForm/>}/>
       </Routes>

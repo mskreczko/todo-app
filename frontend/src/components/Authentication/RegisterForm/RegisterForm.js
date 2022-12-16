@@ -1,5 +1,5 @@
-import { React, useState, useEffect } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { React, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './RegisterForm.css';
 
 function RegisterForm() {
@@ -19,14 +19,13 @@ function RegisterForm() {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        fetch('http://localhost:8080/api/auth/signup/', {
+        fetch('http://localhost:8080/api/v1/auth/signup/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({'email': email, 'password': password}),
-        })
-        .catch((error) => { console.log(error) });
+        }).catch((error) => { console.log(error) });
 
         navigate('/signin');
     }
