@@ -7,7 +7,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import pl.mskreczko.restapi.user.User;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @ExtendWith(MockitoExtension.class)
 public class TaskServiceTest {
@@ -19,24 +21,26 @@ public class TaskServiceTest {
     private TaskService taskService;
 
     @Test
-    void findOneTaskByUserId_returnsEmpty() {
-        Mockito.when(taskRepository.findByUserIdAndTaskId(1, 1)).thenReturn(null);
+    void findAllByUsername_returnsList() {
+        List<Task> tasks = new ArrayList<>() {{
+           add(new Task("walk the dog", "i need to walk my dog", null));
+           add(new Task("buy groceries", "buy groceries", null));
+        }};
+        Mockito.when(taskRepository.findByUsername("test@test.com")).thenReturn(tasks);
 
-        final var actual = taskService.findOneTaskByUserId(1, 1);
+        final var actual = taskService.findAllByUsername("test@test.com");
 
-        Assertions.assertTrue(actual.isEmpty());
+        Assertions.assertEquals(2, actual.size());
+        Assertions.assertEquals("walk the dog", actual.get(0).title());
+        Assertions.assertEquals(Status.ACTIVE, actual.get(0).status());
     }
 
     @Test
-    void findOneTaskByUserId_returnsTaskContentDto() {
-        User user = new User();
-        Task task = new Task("task1", "task", user);
-        Mockito.when(taskRepository.findByUserIdAndTaskId(1, 1)).thenReturn(task);
+    void findAllByUsername_returnsEmptyList() {
+        Mockito.when(taskRepository.findByUsername("test@test.com")).thenReturn(List.of());
 
-        final var actual = taskService.findOneTaskByUserId(1, 1);
+        final var actual = taskService.findAllByUsername("test@test.com");
 
-        Assertions.assertTrue(actual.isPresent());
-        Assertions.assertEquals("task1", actual.get().title());
-        Assertions.assertEquals(Status.ACTIVE, actual.get().status());
+        Assertions.assertEquals(0, actual.size());
     }
 }
