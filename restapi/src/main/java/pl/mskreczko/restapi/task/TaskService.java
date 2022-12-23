@@ -9,6 +9,7 @@ import pl.mskreczko.restapi.user.User;
 import pl.mskreczko.restapi.user.UserService;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -19,6 +20,15 @@ public class TaskService {
 
     public List<TaskPreviewDto> findAllByUsername(String username) {
         return taskRepository.findByUsername(username).stream().map(task -> new TaskPreviewDto(task.getId(), task.getTitle(), task.getStatus())).collect(Collectors.toList());
+    }
+
+    public Optional<TaskContentDto> findByIdAndUsername(Integer id, String username) {
+        Task task = taskRepository.findByIdAndUsername(id, username);
+        if (task != null) {
+            return Optional.of(new TaskContentDto(task.getId(), task.getTitle(), task.getDescription(), task.getCreationDate(), task.getStatus()));
+        }
+
+        return Optional.empty();
     }
 
     public TaskContentDto createNewTask(String username, TaskCreationDto taskCreationDto) {

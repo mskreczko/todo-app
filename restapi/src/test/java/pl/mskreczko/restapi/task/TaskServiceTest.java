@@ -7,6 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import pl.mskreczko.restapi.task.dto.TaskContentDto;
 import pl.mskreczko.restapi.task.dto.TaskCreationDto;
 import pl.mskreczko.restapi.user.User;
 import pl.mskreczko.restapi.user.UserService;
@@ -14,6 +15,7 @@ import pl.mskreczko.restapi.user.UserService;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
 public class TaskServiceTest {
@@ -50,6 +52,27 @@ public class TaskServiceTest {
         final var actual = taskService.findAllByUsername("test@test.com");
 
         Assertions.assertEquals(0, actual.size());
+    }
+
+    @Test
+    void findByIdAndUsername_returnsTask() {
+        User user = new User();
+        Task task = new Task("walk the dog", "i need to walk my dog", user);
+        Mockito.when(taskRepository.findByIdAndUsername(1, "test@test.com")).thenReturn(task);
+
+        TaskContentDto actual = taskService.findByIdAndUsername(1, "test@test.com").get();
+        TaskContentDto expected = new TaskContentDto(task.getId(), task.getTitle(), task.getDescription(), task.getCreationDate(), task.getStatus());
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    void findByIdAndUsername_returnsNull() {
+        Mockito.when(taskRepository.findByIdAndUsername(1, "test@test.com")).thenReturn(null);
+
+        Optional<TaskContentDto> actual = taskService.findByIdAndUsername(1, "test@test.com");
+
+        Assertions.assertTrue(actual.isEmpty());
     }
 
     @Test

@@ -6,10 +6,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import pl.mskreczko.restapi.task.dto.TaskContentDto;
 import pl.mskreczko.restapi.task.dto.TaskCreationDto;
+import pl.mskreczko.restapi.task.dto.TaskPreviewDto;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
-
 
 @AllArgsConstructor
 @RestController
@@ -19,16 +20,27 @@ public class TaskController {
     private TaskService taskService;
 
     @GetMapping
-    public ResponseEntity<?> getTasks() {
+    public ResponseEntity<List<TaskPreviewDto>> getTasks() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         return ResponseEntity.ok().body(taskService.findAllByUsername(username));
     }
 
     @PostMapping("/new")
-    public ResponseEntity<?> createTask(@RequestBody TaskCreationDto taskCreationDto) throws Exception {
+    public ResponseEntity<TaskContentDto> createTask(@RequestBody TaskCreationDto taskCreationDto) throws Exception {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         TaskContentDto task = taskService.createNewTask(username, taskCreationDto);
         return ResponseEntity.created(new URI("/api/v1/tasks/" + task.id())).body(task);
+    }
+
+    @GetMapping
+    public ResponseEntity<TaskContentDto> getTaskById(@RequestParam Integer id) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        Optional<TaskContentDto> task = taskService.findByIdAndUsername(id, username);
+        if (task.isPresent()) {
+            return ResponseEntity.ok(task.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @DeleteMapping
