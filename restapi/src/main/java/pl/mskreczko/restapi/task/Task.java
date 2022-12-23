@@ -6,6 +6,7 @@ import pl.mskreczko.restapi.user.User;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Getter
 @NoArgsConstructor
@@ -41,5 +42,18 @@ public class Task {
         this.creationDate = LocalDate.now();
         this.status = Status.ACTIVE;
         this.user = user;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Task task = (Task) o;
+        return title.equals(task.title) && Objects.equals(description, task.description) && Objects.equals(creationDate, task.creationDate) && status == task.status && Objects.equals(user, task.user);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(title, description, creationDate, status, user);
     }
 }
