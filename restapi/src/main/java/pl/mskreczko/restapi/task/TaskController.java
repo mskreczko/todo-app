@@ -28,7 +28,7 @@ public class TaskController {
     public ResponseEntity<?> createTask(@RequestBody TaskCreationDto taskCreationDto) throws Exception {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         TaskContentDto task = taskService.createNewTask(username, taskCreationDto);
-        return ResponseEntity.created(new URI("/api/v1/tasks/" + task.id())).body(task); // needs testing
+        return ResponseEntity.created(new URI("/api/v1/tasks/" + task.id())).body(task);
     }
 
     @DeleteMapping
