@@ -29,7 +29,6 @@ public class TaskServiceTest {
     @InjectMocks
     private TaskService taskService;
 
-
     @Test
     void findAllByUsername_returnsList() {
         List<Task> tasks = new ArrayList<>() {{

@@ -15,7 +15,7 @@ import java.util.Optional;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/v1/tasks")
-@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = {"Authorization"})
+@CrossOrigin(origins = "http://localhost:3000")
 public class TaskController {
     private TaskService taskService;
 
@@ -32,8 +32,8 @@ public class TaskController {
         return ResponseEntity.created(new URI("/api/v1/tasks/" + task.id())).body(task);
     }
 
-    @GetMapping
-    public ResponseEntity<TaskContentDto> getTaskById(@RequestParam Integer id) {
+    @GetMapping("/{id}")
+    public ResponseEntity<TaskContentDto> getTaskById(@PathVariable Integer id) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         Optional<TaskContentDto> task = taskService.findByIdAndUsername(id, username);
         if (task.isPresent()) {
