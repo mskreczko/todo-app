@@ -1,43 +1,39 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
+import { React, useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import './TaskDetails.css';
 
-class TaskDetails extends React.Component {
-    constructor(props) {
-        super(props);
+// TODO
+// apply styling
+export default function TaskDetails() {
+    const [task, setTask] = useState('');
+    const taskId = useParams();
+    const navigate = useNavigate();
 
-        this.state = {
-            task: null,
-        };
-    }
-
-    componentDidMount() {
-        const { userId, taskId } = this.props.params;
-        fetch("http://localhost:8080/api/users/" + userId + "/tasks/" + taskId)
+    async function getTaskDetails() {
+        await fetch('http://localhost:8080/api/v1/tasks/' + taskId.id, {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token'),
+            },
+        })
         .then((res) => res.json())
-        .then((task) => {this.setState({task: task})});
+        .then((task) => setTask(task));
     }
 
-    render() {
-        if (this.state.task == null) {
-            return (<p>Loading</p>);
+    useEffect(() => {
+        if (!localStorage.getItem('token')) {
+            navigate('/signin');
+        } else {
+            getTaskDetails();
         }
+    })
 
-        const task = this.state.task;
-
-        return (
-            <div className='task'>
-                <h2>{task.title}</h2>
-                <p>{task.description}</p>
-                <p>{task.creationDate}</p>
-            </div>
-        );
-    }
+    return (
+        <div className='task-details'>
+            <h2>{task.title}</h2>
+            <p>{task.description}</p>
+            <p>{task.creationDate}</p>
+            <span>{task.status}</span>
+        </div>
+    );
 }
-
-export default (props) => (
-    <TaskDetails
-        {...props}
-        params={useParams()}
-    />
-)

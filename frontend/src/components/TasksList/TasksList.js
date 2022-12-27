@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './TasksList.css';
 
+// TODO
+// apply styling
 export default function TasksList() {
     const [tasks, setTasks] = useState([]);
     const navigate = useNavigate();
