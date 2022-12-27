@@ -1,0 +1,26 @@
+#new-task {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#new-task-title {
+    display: block;
+    padding: 20px;
+    width: 600px;
+    margin: 10px;
+}
+
+#new-task-description {
+    display: block;
+    padding: 20px;
+    width: 600px;
+    height: 200px;
+    margin: 10px;
+}
+
+.submit-form-btn {
+    float: right;
+}

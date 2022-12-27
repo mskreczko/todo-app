@@ -1,0 +1,45 @@
+@import url('https://css.gg/check.css');
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.tasks {
+    flex: 1;
+    margin: 5% 30% 5px 30%;
+}
+
+.task-preview {
+    border: 1px solid #000;
+    padding: 10px;
+}
+
+.single-task {
+    background-color: #fff;
+    margin: 3%;
+    color: #000;
+    list-style-type: none;
+}
+
+.single-task-status {
+    width: 80px;
+}
+
+.done {
+    text-decoration: line-through;
+}
+
+.single-task-btn {
+    text-decoration: none;
+    color: #000;
+}
+
+a {
+    display: inline-block;
+}
+
+.task-preview:hover {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, .1);
+}

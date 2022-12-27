@@ -1,0 +1,42 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.login-section {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.input-field {
+    padding: 20px;
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #000;
+    border-radius: 10px;
+    display: block;
+    margin: 10px;
+    width: 200px;
+}
+
+.submit-form-btn {
+    padding: 20px;
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #000; 
+    border-radius: 10px;
+    display: block;
+    margin: 10px;
+    width: 240px;
+    font-weight: bold;
+}
+
+.submit-form-btn:hover {
+    cursor: pointer;
+    background-color: #000;
+    color: #fff;
+    border: 1px solid #000;
+}

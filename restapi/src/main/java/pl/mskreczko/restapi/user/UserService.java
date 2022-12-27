@@ -1,36 +1,29 @@
 package pl.mskreczko.restapi.user;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.mskreczko.restapi.user.exceptions.UserAlreadyExistsException;
-import pl.mskreczko.restapi.user.exceptions.UserDoesNotExistException;
 
-import java.util.Optional;
-
+@RequiredArgsConstructor
 @Service
-public class UserService {
-    private UserRepository userRepository;
+public class UserService implements UserDetailsService {
+    private final UserRepository userRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
-    public Optional<User> getUserById(Integer id) {
-        return userRepository.findById(id);
-    }
-
-    public void createUser(User user) throws UserAlreadyExistsException {
-        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
+    public void registerUser(String username, String password) throws UserAlreadyExistsException {
+        if (userRepository.findByEmail(username).isPresent()) {
             throw new UserAlreadyExistsException();
         }
 
-        userRepository.save(user);
+        userRepository.save(new User(username, bCryptPasswordEncoder.encode(password)));
     }
 
-    public void deleteUser(Integer id) throws UserDoesNotExistException {
-        if (userRepository.findById(id).isEmpty()) {
-            throw new UserDoesNotExistException();
-        }
-
-        userRepository.deleteById(id);
+    @Override
+    public User loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByEmail(username)
+                .orElseThrow(() -> new UsernameNotFoundException("No user with such username"));
     }
 }

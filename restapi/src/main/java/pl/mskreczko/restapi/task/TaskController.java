@@ -1,53 +1,55 @@
 package pl.mskreczko.restapi.task;
 
-import org.springframework.http.HttpStatus;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import pl.mskreczko.restapi.task.dto.TaskContentDto;
 import pl.mskreczko.restapi.task.dto.TaskCreationDto;
-import pl.mskreczko.restapi.user.UserService;
+import pl.mskreczko.restapi.task.dto.TaskPreviewDto;
 
+import java.net.URI;
+import java.util.List;
+import java.util.Optional;
 
+@AllArgsConstructor
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/v1/tasks")
 @CrossOrigin(origins = "http://localhost:3000")
 public class TaskController {
     private TaskService taskService;
-    private UserService userService;
 
-    public TaskController(TaskService taskService, UserService userService) {
-        this.taskService = taskService;
-        this.userService = userService;
+    @GetMapping
+    public ResponseEntity<List<TaskPreviewDto>> getTasks() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return ResponseEntity.ok().body(taskService.findAllByUsername(username));
     }
 
-    @GetMapping("/users/{userId}/tasks")
-    public ResponseEntity<?> getTasksByUserId(@PathVariable("userId") Integer userId) {
-        if (userService.getUserById(userId).isEmpty()) {
+    @PostMapping("/new")
+    public ResponseEntity<TaskContentDto> createTask(@RequestBody TaskCreationDto taskCreationDto) throws Exception {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        TaskContentDto task = taskService.createNewTask(username, taskCreationDto);
+        return ResponseEntity.created(new URI("/api/v1/tasks/" + task.id())).body(task);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<TaskContentDto> getTaskById(@PathVariable Integer id) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        Optional<TaskContentDto> task = taskService.findByIdAndUsername(id, username);
+        if (task.isPresent()) {
+            return ResponseEntity.ok(task.get());
+        } else {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(taskService.findAllByUserId(userId));
     }
 
-    @GetMapping("/users/{userId}/tasks/{taskId}")
-    public ResponseEntity<?> getOneTaskByUserId(@PathVariable("userId") Integer userId, @PathVariable("taskId") Integer taskId) {
-        if (userService.getUserById(userId).isEmpty()) {
-            return ResponseEntity.notFound().build();
+    @DeleteMapping
+    public ResponseEntity<?> deleteTask(@RequestParam Optional<Integer> id) {
+        if (id.isPresent()) {
+            taskService.deleteTask(id.get());
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.badRequest().build();
         }
-        return ResponseEntity.of(taskService.findOneTaskByUserId(userId, taskId));
     }
-
-    @PostMapping("/users/{userId}/tasks")
-    public ResponseEntity<?> createNewTask(@PathVariable("userId") Integer userId, @RequestBody TaskCreationDto taskCreationDto) {
-        if (userService.getUserById(userId).isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-
-        taskService.createNewTask(userService.getUserById(userId).get(), taskCreationDto);
-
-        return new ResponseEntity<>(HttpStatus.CREATED);
-    }
-
-    // @DeleteMapping("/users/{userId}/tasks/{taskId}")
-    // public ResponseEntity<?> deleteTaskById(@PathVariable("userId") Integer userId, @PathVariable("taskId") Integer taskId) {
-
-    // }
 }

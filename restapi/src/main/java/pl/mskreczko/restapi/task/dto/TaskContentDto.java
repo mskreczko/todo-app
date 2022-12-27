@@ -4,5 +4,5 @@ import pl.mskreczko.restapi.task.Status;
 
 import java.time.LocalDate;
 
-public record TaskContentDto(String title, String description, LocalDate creationDate, Status status) {
+public record TaskContentDto(Integer id, String title, String description, LocalDate creationDate, Status status) {
 }
