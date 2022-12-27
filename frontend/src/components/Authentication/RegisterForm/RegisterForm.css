@@ -3,35 +3,16 @@
     padding: 0;
 }
 
-.register-form {
+.register-section {
+    display: flex;
     flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-.input-field {
-    padding: 20px;
-    background-color: #0c0b0d;
-    color: #fff;
-    border: none;
-    border-radius: 10px;
-    display: block;
-    margin: 10px;
-    width: 200px;
-}
-
-.submit-form-btn {
-    padding: 20px;
-    background-color: #fff;
-    color: #000;
-    border: none;
-    border-radius: 10px;
-    display: block;
-    margin: 10px;
-    width: 240px;
-}
-
-.submit-form-btn:hover {
-    cursor: pointer;
-    background-color: #000;
-    color: #fff;
-    border: 1px solid #fff;
+.form-error {
+    color: red;
+    font-size: 15px;
+    text-align: center;
 }

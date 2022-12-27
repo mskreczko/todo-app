@@ -2,10 +2,11 @@ import { React, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './RegisterForm.css';
 
-function RegisterForm() {
+export default function RegisterForm() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [userAlreadyExists, setUserAlreadyExists] = useState(false);
     const navigate = useNavigate();
 
     const onChange = (e) => {
@@ -25,18 +26,29 @@ function RegisterForm() {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({'email': email, 'password': password}),
-        }).catch((error) => { console.log(error) });
-
-        navigate('/signin');
+        })
+        .then((response) => {
+            if (response.status === 201) {
+                navigate('/signin');
+            } else if (response.status == 409) {
+                setUserAlreadyExists(true);
+            }
+        });
     }
 
     return (
-        <form className='register-form' onSubmit={onSubmit}>
-            <input className='input-field' type='email' value={email} onChange={onChange} name='email' placeholder='Enter your email'/>
-            <input className='input-field' type='password' value={password} onChange={onChange} name='password' placeholder='Enter your password'/>
-            <button type='submit' className='submit-form-btn'>Sign up</button>
-        </form>
+        <section className='register-section'>
+            <h1>Sign up</h1>
+            <form className='register-form' onSubmit={onSubmit}>
+                <input required className='input-field' type='email' value={email} onChange={onChange} name='email' placeholder='Enter your email'/>
+                <input required className='input-field' type='password' value={password} onChange={onChange} name='password' placeholder='Enter your password'/>
+                <button type='submit' className='submit-form-btn'>Sign up</button>
+            </form>
+            { userAlreadyExists ? <Error/> : null }
+        </section>
     );
 }
 
-export default RegisterForm;
+const Error = () => (
+    <p className='form-error'>User with such email already exists.</p>
+)

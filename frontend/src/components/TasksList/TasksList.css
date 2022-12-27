@@ -1,3 +1,5 @@
+@import url('https://css.gg/check.css');
+
 * {
     margin: 0;
     padding: 0;
@@ -8,19 +10,16 @@
     margin: 5% 30% 5px 30%;
 }
 
-.single-task {
-    background-color: #0c0b0d;
-    border-radius: 10px;
-    margin: 3%;
-    padding: 5px;
-    color: #fff;
-    list-style-type: none;
+.task-preview {
+    border: 1px solid #000;
+    padding: 10px;
 }
 
-.single-task:hover {
-    cursor: pointer;
+.single-task {
     background-color: #fff;
+    margin: 3%;
     color: #000;
+    list-style-type: none;
 }
 
 .single-task-status {
@@ -33,9 +32,14 @@
 
 .single-task-btn {
     text-decoration: none;
-    color: #fff;
+    color: #000;
 }
 
-.single-task-btn:hover {
-    color: #000;
+a {
+    display: inline-block;
+}
+
+.task-preview:hover {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, .1);
 }
