@@ -1,3 +1,8 @@
 # TODO App
 
-Simple todo app written using Spring Boot.
+Technologies used:
+    - Java
+    - Spring (Boot, Security)
+    - React
+    - PostgreSQL
+    - Docker
