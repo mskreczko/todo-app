@@ -1,12 +1,12 @@
 # TODO App
 
 Technologies used:
-    - Java
+- Java
 
-    - Spring (Boot, Security)
+- Spring (Boot, Security)
 
-    - React
+- React
 
-    - PostgreSQL
+- PostgreSQL
 
-    - Docker
+- Docker
