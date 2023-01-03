@@ -34,3 +34,5 @@ build/
 
 restapi/src/main/resources
 restapi/.mvn
+
+db/
