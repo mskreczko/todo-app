@@ -30,7 +30,7 @@ export default function RegisterForm() {
         .then((response) => {
             if (response.status === 201) {
                 navigate('/signin');
-            } else if (response.status == 409) {
+            } else if (response.status === 409) {
                 setUserAlreadyExists(true);
             }
         });
