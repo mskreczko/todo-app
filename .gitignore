@@ -36,3 +36,4 @@ restapi/src/main/resources
 restapi/.mvn
 
 db/
+.env
