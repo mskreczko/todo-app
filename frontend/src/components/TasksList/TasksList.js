@@ -21,11 +21,7 @@ export default function TasksList() {
     }
 
     useEffect(() => {
-        if (!localStorage.getItem('token')) {
-            navigate('/signin')
-        } else {
-            getTasks();
-        }
+        getTasks();
     })
 
     return (

@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from 'react';
+import { React, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './NewTask.css';
 
@@ -6,12 +6,6 @@ export default function NewTask() {
     const [title, setTitle] = useState('');
     const [description, setDescription]  = useState('');
     const navigate = useNavigate();
-
-    useEffect(() => {
-        if (!localStorage.getItem('token')) {
-            navigate('/signin');
-        }
-    })
 
     const onChange = (e) => {
         if (e.target.name === 'title') {

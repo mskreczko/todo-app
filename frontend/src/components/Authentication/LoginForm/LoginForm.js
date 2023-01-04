@@ -1,10 +1,13 @@
 import { React, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import { authenticationState } from '../../atoms/AuthenticationAtom';
 import './LoginForm.css';
 
 function LoginForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [isAuthenticated, setAuthenticated] = useRecoilState(authenticationState);
     const navigate = useNavigate();
 
     const onChange = (e) => {
@@ -28,7 +31,11 @@ function LoginForm() {
         .then((response) => { 
             if (response.status === 200)
                 return response.text();
-            }).then((data) => { localStorage.setItem("token", data); navigate('/tasks') })
+            }).then((data) => {
+                localStorage.setItem("token", data);
+                setAuthenticated(true);
+                navigate('/tasks');
+            })
             .catch((error) => { console.log(error) });
     }
 

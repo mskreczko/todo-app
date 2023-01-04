@@ -20,13 +20,7 @@ export default function TaskDetails() {
         .then((task) => setTask(task));
     }
 
-    useEffect(() => {
-        if (!localStorage.getItem('token')) {
-            navigate('/signin');
-        } else {
-            getTaskDetails();
-        }
-    })
+    getTaskDetails();
 
     return (
         <div className='task-details'>
