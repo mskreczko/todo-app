@@ -1,5 +1,5 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { authenticationState } from '../atoms/AuthenticationAtom';
 import './ProtectedRoute.css';
@@ -12,18 +12,23 @@ const ProtectedRoute = () => {
     }
 
     return (
-        <div>
+        <main>
             <nav>
                 <section id='nav-left'>
-                    <a className='nav-btn' href='/tasks/new'>New Task</a>
+                    <h2>TodoApp</h2>
+                    <Link className='nav-btn' to='/tasks/new'>New Task</Link>
                 </section>
                 <section id='nav-right'>
-                    <a className='nav-btn' href='/logout'>Logout</a>
+                    <Link className='nav-btn' to='/logout'>Logout</Link>
                 </section>
             </nav>
 
             <Outlet/>
-        </div>
+
+            <footer>
+                <span>Michał Skreczko &copy; 2023</span>
+            </footer>
+        </main>
     )
 }
 

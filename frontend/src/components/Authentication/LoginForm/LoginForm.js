@@ -1,5 +1,4 @@
 import { React, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { authenticationState } from '../../atoms/AuthenticationAtom';
 import './LoginForm.css';
@@ -8,7 +7,6 @@ function LoginForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isAuthenticated, setAuthenticated] = useRecoilState(authenticationState);
-    const navigate = useNavigate();
 
     const onChange = (e) => {
         if (e.target.name === 'email') {
@@ -28,15 +26,18 @@ function LoginForm() {
             },
             body: JSON.stringify({'email': email, 'password': password}),
         })
-        .then((response) => { 
-            if (response.status === 200)
-                return response.text();
-            }).then((data) => {
-                localStorage.setItem("token", data);
-                setAuthenticated(true);
-                navigate('/tasks');
-            })
-            .catch((error) => { console.log(error) });
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error('error');
+            }
+            return response.text();
+        })
+        .then((data) => { 
+            localStorage.setItem("token", data);
+            setAuthenticated(true);
+            window.location.href = '/tasks';
+        })
+        .catch(() => { window.location.href = '/signin' });
     }
 
     return (

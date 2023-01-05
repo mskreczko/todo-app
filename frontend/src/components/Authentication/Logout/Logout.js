@@ -10,6 +10,7 @@ export default function Logout() {
     useEffect(() => {
         setAuthenticated(false);
         console.log('logged out');
+        localStorage.clear("token");
         navigate('/');
     });
 }

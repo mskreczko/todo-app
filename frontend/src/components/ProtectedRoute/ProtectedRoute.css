@@ -1,3 +1,9 @@
+main {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
 nav {
     width: 100%;
 }
@@ -10,6 +16,10 @@ nav {
     float: right;
 }
 
+#nav-left h2 {
+    display: inline-block;
+}
+
 .nav-btn {
     padding: 10px;
     background-color: #fff;
@@ -20,4 +30,16 @@ nav {
     margin: 10px;
     width: 100px;
     text-decoration: none;
+}
+
+.nav-btn:hover {
+    background-color: #000;
+    color: #fff;
+    border: 1px solid #000;
+}
+
+footer {
+    text-align: center;
+    color: #000;
+    margin-top: auto;
 }
