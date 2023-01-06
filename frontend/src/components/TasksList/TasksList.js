@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import './TasksList.css';
 
 // TODO
 // apply styling
 export default function TasksList() {
     const [tasks, setTasks] = useState([]);
-    const navigate = useNavigate();
 
     async function getTasks() {
         await fetch('http://localhost:8080/api/v1/tasks', {

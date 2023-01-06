@@ -1,13 +1,22 @@
 import { React, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import './RegisterForm.css';
 
+async function signInUser(email, password) {
+    return await fetch('http://localhost:8080/api/v1/auth/signup/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({'email': email, 'password': password}),
+    });
+}
+
+// TODO
+// render authentication errors
 export default function RegisterForm() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [userAlreadyExists, setUserAlreadyExists] = useState(false);
-    const navigate = useNavigate();
 
     const onChange = (e) => {
         if (e.target.name === 'email') {
@@ -20,20 +29,11 @@ export default function RegisterForm() {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        fetch('http://localhost:8080/api/v1/auth/signup/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({'email': email, 'password': password}),
-        })
-        .then((response) => {
+        signInUser(email, password).then((response) => {
             if (response.status === 201) {
-                navigate('/signin');
-            } else if (response.status === 409) {
-                setUserAlreadyExists(true);
+                window.location.href = '/signin';
             }
-        });
+        }).catch(() => {});
     }
 
     return (
@@ -44,11 +44,6 @@ export default function RegisterForm() {
                 <input required className='input-field' type='password' value={password} onChange={onChange} name='password' placeholder='Enter your password'/>
                 <button type='submit' className='submit-form-btn'>Sign up</button>
             </form>
-            { userAlreadyExists ? <Error/> : null }
         </section>
     );
 }
-
-const Error = () => (
-    <p className='form-error'>User with such email already exists.</p>
-)

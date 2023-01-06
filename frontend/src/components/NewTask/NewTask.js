@@ -2,6 +2,17 @@ import { React, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './NewTask.css';
 
+async function createTask(title, description) {
+    return await fetch('http://localhost:8080/api/v1/tasks/new', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token'),
+        },
+        body: JSON.stringify({'title': title, 'description': description}),
+    });
+}
+
 export default function NewTask() {
     const [title, setTitle] = useState('');
     const [description, setDescription]  = useState('');
@@ -18,15 +29,7 @@ export default function NewTask() {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        fetch('http://localhost:8080/api/v1/tasks/new', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + localStorage.getItem('token'),
-            },
-            body: JSON.stringify({'title': title, 'description': description}),
-        });
-
+        createTask(title, description);
         navigate('/tasks');
     }
 

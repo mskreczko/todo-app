@@ -3,10 +3,22 @@ import { useRecoilState } from 'recoil';
 import { authenticationState } from '../../atoms/AuthenticationAtom';
 import './LoginForm.css';
 
+async function sendAuthRequest(email, password) {
+    return await fetch('http://localhost:8080/api/v1/auth/signin', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({'email': email, 'password': password}),
+    });
+}
+
+// TODO
+// render authentication errors
 function LoginForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [isAuthenticated, setAuthenticated] = useRecoilState(authenticationState);
+    const [_, setAuthenticated] = useRecoilState(authenticationState);
 
     const onChange = (e) => {
         if (e.target.name === 'email') {
@@ -19,25 +31,16 @@ function LoginForm() {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        fetch('http://localhost:8080/api/v1/auth/signin', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({'email': email, 'password': password}),
-        })
-        .then((response) => {
+        sendAuthRequest(email, password).then((response) => {
             if (!response.ok) {
                 throw new Error('error');
             }
             return response.text();
-        })
-        .then((data) => { 
+        }).then((data) => { 
             localStorage.setItem("token", data);
             setAuthenticated(true);
             window.location.href = '/tasks';
-        })
-        .catch(() => { window.location.href = '/signin' });
+        }).catch(() => {});
     }
 
     return (
