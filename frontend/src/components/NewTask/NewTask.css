@@ -11,6 +11,8 @@
     padding: 20px;
     width: 600px;
     margin: 10px;
+    background-color: #080808;
+    color: #fff;
 }
 
 #new-task-description {
@@ -19,8 +21,14 @@
     width: 600px;
     height: 200px;
     margin: 10px;
+    background-color: #080808;
+    color: #fff;
+    resize: none;
 }
 
 .submit-form-btn {
     float: right;
+    background-color: #080808;
+    border: 1px solid #fff;
+    color: #fff;
 }

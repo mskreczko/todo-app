@@ -11,14 +11,14 @@
 }
 
 .task-preview {
-    border: 1px solid #000;
+    border: 1px solid #ddd;
     padding: 10px;
 }
 
 .single-task {
-    background-color: #fff;
+    background-color: #080808;
     margin: 3%;
-    color: #000;
+    color: #fff;
     list-style-type: none;
 }
 
@@ -32,7 +32,7 @@
 
 .single-task-btn {
     text-decoration: none;
-    color: #000;
+    color: #fff;
 }
 
 a {

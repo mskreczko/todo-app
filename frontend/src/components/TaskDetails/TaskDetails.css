@@ -3,7 +3,17 @@
     padding: 0;
 }
 
-.task {
-    color: #000;
+.task-details {
     flex: 1;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+}
+
+.task-details h2 {
+    border-bottom: 1px solid crimson;
+}
+
+#description {
+    border: 1px solid #000;
 }

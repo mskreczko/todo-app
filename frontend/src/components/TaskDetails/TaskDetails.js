@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import { React, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import './TaskDetails.css';
 
@@ -11,26 +11,21 @@ async function getTaskDetails(id) {
     });
 }
 
-// TODO
-// apply styling
 export default function TaskDetails() {
     const [task, setTask] = useState('');
     const taskId = useParams();
 
-    function getTaskDetails() {
+    useEffect(() => {
         getTaskDetails(taskId.id)
         .then((res) => res.json())
         .then((task) => setTask(task));
-    }
-
-    getTaskDetails();
+    });
 
     return (
         <div className='task-details'>
-            <h2>{task.title}</h2>
-            <p>{task.description}</p>
-            <p>{task.creationDate}</p>
-            <span>{task.status}</span>
+            <h2 className='task-element'>{task.title}</h2>
+            <p className='task-element'>{task.creationDate}</p>
+            <p id='description' className='task-element'>{task.description}</p>
         </div>
     );
 }
