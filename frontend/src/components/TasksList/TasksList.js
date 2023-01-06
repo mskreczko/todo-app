@@ -28,7 +28,7 @@ export default function TasksList() {
                 <li className='single-task' key={idx}>
                     <div className='task-preview'>
                         <a className='single-task-btn' href={'/tasks/' + task.id}><h2 className='single-task-title'>{task.title}</h2></a>
-                        <a href={'/delete?id=' + task.id}><i className='gg-check'></i></a>
+                        <a className='del-icon' href={'/delete?id=' + task.id}><i className='gg-trash'></i></a>
                     </div>
                 </li>
             ))}

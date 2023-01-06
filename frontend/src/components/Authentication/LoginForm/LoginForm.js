@@ -18,7 +18,7 @@ async function sendAuthRequest(email, password) {
 function LoginForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [_, setAuthenticated] = useRecoilState(authenticationState);
+    const setAuthenticated = useRecoilState(authenticationState)[1];
 
     const onChange = (e) => {
         if (e.target.name === 'email') {

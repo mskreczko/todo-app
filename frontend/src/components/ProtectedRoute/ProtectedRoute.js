@@ -5,7 +5,7 @@ import { authenticationState } from '../atoms/AuthenticationAtom';
 import './ProtectedRoute.css';
 
 const ProtectedRoute = () => {
-    const [authenticated, setAuthenticated] = useRecoilState(authenticationState);
+    const authenticated = useRecoilState(authenticationState)[0];
 
     if (!authenticated) {
         window.location.href = '/signin';
@@ -15,7 +15,7 @@ const ProtectedRoute = () => {
         <main>
             <nav>
                 <section id='nav-left'>
-                    <h2>TodoApp</h2>
+                    <Link className='hero-link' to='/tasks'><h2>TodoApp</h2></Link>
                     <Link className='nav-btn' to='/tasks/new'>New Task</Link>
                 </section>
                 <section id='nav-right'>

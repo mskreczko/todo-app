@@ -1,4 +1,4 @@
-@import url('https://css.gg/check.css');
+@import url('https://css.gg/trash.css');
 
 * {
     margin: 0;
@@ -42,4 +42,12 @@ a {
 .task-preview:hover {
     cursor: pointer;
     background-color: rgba(0, 0, 0, .1);
+}
+
+.del-icon {
+    float: right;
+}
+
+.del-icon i {
+    color: red;
 }

@@ -3,7 +3,7 @@ import { useRecoilState } from 'recoil';
 import { authenticationState } from '../../atoms/AuthenticationAtom';
 
 export default function Logout() {
-    const [_, setAuthenticated] = useRecoilState(authenticationState);
+    const setAuthenticated = useRecoilState(authenticationState)[1];
 
     useEffect(() => {
         setAuthenticated(false);
