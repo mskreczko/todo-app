@@ -1,5 +1,4 @@
 import { React, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import './NewTask.css';
 
 async function createTask(title, description) {
@@ -16,7 +15,6 @@ async function createTask(title, description) {
 export default function NewTask() {
     const [title, setTitle] = useState('');
     const [description, setDescription]  = useState('');
-    const navigate = useNavigate();
 
     const onChange = (e) => {
         if (e.target.name === 'title') {
@@ -30,7 +28,7 @@ export default function NewTask() {
     const onSubmit = (e) => {
         e.preventDefault();
         createTask(title, description);
-        navigate('/tasks');
+        window.location.href = '/tasks';
     }
 
     return (

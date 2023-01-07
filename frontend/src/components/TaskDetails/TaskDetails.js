@@ -2,24 +2,26 @@ import { React, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import './TaskDetails.css';
 
-async function getTaskDetails(id) {
-    return await fetch('http://localhost:8080/api/v1/tasks/' + id, {
-        method: 'GET',
-        headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('token'),
-        },
-    });
-}
-
 export default function TaskDetails() {
     const [task, setTask] = useState('');
     const taskId = useParams();
 
     useEffect(() => {
-        getTaskDetails(taskId.id)
-        .then((res) => res.json())
-        .then((task) => setTask(task));
-    });
+        const getTaskDetails = async (id) => {
+            const data = await(
+                fetch('http://localhost:8080/api/v1/tasks/' + id, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token'),
+                    },
+                })
+            ).then((response) => response.json())
+
+            setTask(data);
+        }
+
+        getTaskDetails(taskId.id);
+    }, []);
 
     return (
         <div className='task-details'>
