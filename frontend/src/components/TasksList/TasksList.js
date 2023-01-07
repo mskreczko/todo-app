@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import './TasksList.css';
 
-// TODO
-// apply styling
 export default function TasksList() {
     const [tasks, setTasks] = useState([]);
 
@@ -13,22 +12,22 @@ export default function TasksList() {
                 'Authorization': 'Bearer ' + localStorage.getItem('token'),
             },
         })
-        .then((response) => response.json())
+        .then((response) => { response.json() })
         .then((tasks) => { setTasks(tasks) })
         .catch((error) => {console.log(error) });
     }
 
     useEffect(() => {
         getTasks();
-    })
+    }, []);
 
     return (
         <ul className='tasks'>
             {tasks.map((task, idx) => (
                 <li className='single-task' key={idx}>
                     <div className='task-preview'>
-                        <a className='single-task-btn' href={'/tasks/' + task.id}><h2 className='single-task-title'>{task.title}</h2></a>
-                        <a className='del-icon' href={'/delete?id=' + task.id}><i className='gg-trash'></i></a>
+                        <Link className='single-task-btn' href={`/tasks/${task.id}`}><h2 className='single-task-title'>{task.title}</h2></Link>
+                        <Link className='del-icon' to={`/tasks/delete/${task.id}`}><i className='gg-trash'></i></Link>
                     </div>
                 </li>
             ))}
