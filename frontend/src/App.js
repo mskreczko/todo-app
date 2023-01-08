@@ -6,6 +6,7 @@ import Logout from './components/Authentication/Logout/Logout';
 import Hero from './components/Hero/Hero';
 import NewTask from './components/NewTask/NewTask';
 import TaskDetails from './components/TaskDetails/TaskDetails';
+import DeleteTask from './components/DeleteTask';
 import { Route, Routes } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 
@@ -23,6 +24,7 @@ export default function App() {
           <Route index element={<TasksList/>}/>
           <Route path='new' element={<NewTask/>}/>
           <Route path=':id' element={<TaskDetails/>}/>
+          <Route path='delete/:id' element={<DeleteTask/>}/>
         </Route>
 
         <Route path='logout' element={<ProtectedRoute/>}>
