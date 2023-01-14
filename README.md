@@ -13,6 +13,7 @@ Technologies used:
 <hr>
 
 API Endpoints:
+
 ` GET /api/v1/tasks` - returns a JSON array of tasks
 
 ` DELETE /api/v1/tasks/:id` - deletes a task with given id
@@ -34,8 +35,12 @@ docker compose up --build
 ```
 
 <hr>
+
 ![Hero](https://github.com/mskreczko/todo-app/blob/main/images/hero.png?raw=true)
+
 ![Sign in](https://github.com/mskreczko/todo-app/blob/main/images/signin.png?raw=true)
+
 ![New task](https://github.com/mskreczko/todo-app/blob/main/images/new_task.png?raw=true)
+
 ![Main](https://github.com/mskreczko/todo-app/blob/main/images/main.png?raw=true)
 
