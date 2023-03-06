@@ -36,11 +36,7 @@ public class TaskController {
     public ResponseEntity<TaskContentDto> getTaskById(@PathVariable Integer id) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         Optional<TaskContentDto> task = taskService.findByIdAndUsername(id, username);
-        if (task.isPresent()) {
-            return ResponseEntity.ok(task.get());
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return task.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @DeleteMapping
